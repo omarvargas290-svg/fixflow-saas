@@ -33,6 +33,34 @@ export async function apiFetch<T>(
   return payload as T;
 }
 
+export async function publicFetch<T>(
+  path: string,
+  options: RequestInit = {}
+): Promise<T> {
+  const response = await fetch(`${API_URL}${path}`, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers ?? {})
+    }
+  });
+
+  const contentType = response.headers.get("content-type") ?? "";
+  const payload = contentType.includes("application/json")
+    ? await response.json()
+    : await response.text();
+
+  if (!response.ok) {
+    throw new Error(
+      typeof payload === "string"
+        ? payload
+        : payload.message || "No se pudo completar la solicitud."
+    );
+  }
+
+  return payload as T;
+}
+
 export function money(value: number) {
   return new Intl.NumberFormat("es-MX", {
     style: "currency",

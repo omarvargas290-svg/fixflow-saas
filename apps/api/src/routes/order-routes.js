@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { ServiceOrderStatus } from "@prisma/client";
+import jwt from "jsonwebtoken";
 import { z } from "zod";
+import { env } from "../config/env.js";
 import { requireAuth } from "../middleware/auth.js";
 import { prisma } from "../services/prisma.js";
 import { asyncHandler } from "../utils/async-handler.js";
@@ -180,6 +182,45 @@ router.patch(
     });
 
     res.json(serialize(order));
+  })
+);
+
+router.post(
+  "/:id/share-link",
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const order = await prisma.serviceOrder.findFirst({
+      where: {
+        id: req.params.id,
+        tenantId: req.auth.tenantId,
+        ...(req.auth.branchId ? { branchId: req.auth.branchId } : {})
+      },
+      select: {
+        id: true,
+        tenantId: true,
+        folio: true
+      }
+    });
+
+    if (!order) {
+      return res.status(404).json({ message: "Orden no encontrada." });
+    }
+
+    const token = jwt.sign(
+      {
+        type: "service-order-track",
+        orderId: order.id,
+        tenantId: order.tenantId
+      },
+      env.JWT_SECRET,
+      { expiresIn: "30d" }
+    );
+
+    res.json({
+      token,
+      folio: order.folio,
+      trackingPath: `/seguimiento?token=${encodeURIComponent(token)}`
+    });
   })
 );
 

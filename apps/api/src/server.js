@@ -13,6 +13,7 @@ import inventoryRoutes from "./routes/inventory-routes.js";
 import orderRoutes from "./routes/order-routes.js";
 import posRoutes from "./routes/pos-routes.js";
 import purchaseRoutes from "./routes/purchase-routes.js";
+import publicRoutes from "./routes/public-routes.js";
 import reportRoutes from "./routes/report-routes.js";
 import subscriptionRoutes from "./routes/subscription-routes.js";
 import supplierRoutes from "./routes/supplier-routes.js";
@@ -66,6 +67,7 @@ app.get("/health", (_req, res) => {
   res.json({ ok: true, service: "fixflow-api", timestamp: new Date().toISOString() });
 });
 
+app.use("/api/v1/public", publicRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/billing-admin", billingAdminRoutes);
 app.use("/api/v1/tenant", tenantRoutes);

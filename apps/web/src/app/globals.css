@@ -44,7 +44,8 @@ button {
 }
 
 .login-shell,
-.screen-center {
+.screen-center,
+.tracking-shell {
   min-height: 100vh;
   display: grid;
   place-items: center;
@@ -58,10 +59,21 @@ button {
   padding: 32px;
 }
 
+.tracking-shell {
+  padding: 32px;
+}
+
 .login-grid {
   width: min(1100px, 100%);
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+}
+
+.tracking-grid {
+  width: min(1180px, 100%);
+  display: grid;
+  grid-template-columns: 1.02fr 0.98fr;
   gap: 24px;
 }
 
@@ -86,6 +98,10 @@ button {
   flex-direction: column;
   justify-content: space-between;
   min-height: 560px;
+}
+
+.tracking-hero {
+  min-height: 420px;
 }
 
 .hero-card h1 {
@@ -125,6 +141,12 @@ button {
 
 .login-card {
   padding: 32px;
+}
+
+.tracking-card {
+  display: grid;
+  gap: 18px;
+  align-content: start;
 }
 
 .eyebrow {
@@ -968,6 +990,45 @@ tbody tr:hover {
   border: 1px dashed rgba(20, 92, 255, 0.2);
 }
 
+.tracking-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.tracking-error strong {
+  color: var(--danger);
+}
+
+.tracking-progress-card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #fbfdff 0%, #f4f8ff 100%);
+  border: 1px solid rgba(20, 92, 255, 0.1);
+}
+
+.tracking-progress-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tracking-progress-track {
+  height: 12px;
+  border-radius: 999px;
+  background: #e6eefc;
+  overflow: hidden;
+}
+
+.tracking-progress-bar {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
 .pipeline {
   display: grid;
   gap: 12px;
@@ -1132,6 +1193,7 @@ tbody tr:hover {
 
   .split-grid,
   .login-grid,
+  .tracking-grid,
   .overview-hero {
     grid-template-columns: 1fr;
   }
@@ -1192,7 +1254,8 @@ tbody tr:hover {
 
 @media (max-width: 700px) {
   .login-shell,
-  .content-area {
+  .content-area,
+  .tracking-shell {
     padding: 18px;
   }
 

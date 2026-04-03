@@ -44,6 +44,12 @@ type UserOption = {
   user: { id: string; name: string; email: string };
 };
 
+type ShareLinkResponse = {
+  token: string;
+  folio: string;
+  trackingPath: string;
+};
+
 const initialForm = {
   customer: {
     fullName: "",
@@ -247,6 +253,40 @@ export default function OrdersPage() {
     win.document.close();
   }
 
+  async function shareTrackingLink(order: Order) {
+    setMessage("");
+
+    try {
+      const response = await apiFetch<ShareLinkResponse>(`/service-orders/${order.id}/share-link`, {
+        method: "POST"
+      });
+
+      const trackingUrl = `${window.location.origin}${response.trackingPath}`;
+
+      if (navigator.share) {
+        await navigator.share({
+          title: `Seguimiento ${order.folio}`,
+          text: `Consulta aqui el estado de tu reparacion ${order.folio}.`,
+          url: trackingUrl
+        });
+      } else if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(trackingUrl);
+      } else {
+        window.open(trackingUrl, "_blank", "noopener,noreferrer");
+      }
+
+      setMessageType("success");
+      setMessage("Liga de seguimiento lista para compartir.");
+    } catch (error) {
+      setMessageType("error");
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "No se pudo generar la liga de seguimiento."
+      );
+    }
+  }
+
   const selectedOrder = orders.find((order) => order.id === selectedOrderId) ?? null;
   const openOrders = orders.filter((order) => order.status !== "DELIVERED").length;
   const readyOrders = orders.filter((order) => order.status === "READY_DELIVERY").length;
@@ -392,6 +432,16 @@ export default function OrdersPage() {
                           >
                             Ticket
                           </button>
+                          <button
+                            className="mini-button"
+                            onClick={async (event) => {
+                              event.stopPropagation();
+                              await shareTrackingLink(order);
+                            }}
+                            type="button"
+                          >
+                            Compartir
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -527,8 +577,19 @@ export default function OrdersPage() {
                 ) : null}
 
                 <div className="action-row">
-                  <button className="primary-button" onClick={() => printTicket(selectedOrder)} type="button">
+                  <button
+                    className="primary-button"
+                    onClick={() => printTicket(selectedOrder)}
+                    type="button"
+                  >
                     Imprimir ticket
+                  </button>
+                  <button
+                    className="secondary-button"
+                    onClick={() => shareTrackingLink(selectedOrder)}
+                    type="button"
+                  >
+                    Compartir liga de seguimiento
                   </button>
                 </div>
               </div>
