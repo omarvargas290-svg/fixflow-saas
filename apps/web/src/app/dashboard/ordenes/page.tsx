@@ -168,13 +168,33 @@ export default function OrdersPage() {
     setMessageType("success");
 
     try {
+      const payload = {
+        customer: {
+          fullName: form.customer.fullName.trim(),
+          phone: form.customer.phone.trim(),
+          email: form.customer.email.trim() || undefined,
+          notes: form.customer.notes.trim() || undefined
+        },
+        device: {
+          category: form.device.category.trim(),
+          brand: form.device.brand.trim(),
+          model: form.device.model.trim(),
+          serialNumber: form.device.serialNumber.trim() || undefined,
+          imei: form.device.imei.trim() || undefined,
+          accessories: form.device.accessories.trim() || undefined,
+          issueSummary: form.device.issueSummary.trim() || form.failureReport.trim()
+        },
+        failureReport: form.failureReport.trim(),
+        priority: form.priority || undefined,
+        assignedUserId: form.assignedUserId || undefined,
+        promisedAt: form.promisedAt ? new Date(form.promisedAt).toISOString() : undefined,
+        estimateAmount: Number(form.estimateAmount || 0),
+        paidAmount: Number(form.paidAmount || 0)
+      };
+
       await apiFetch("/service-orders", {
         method: "POST",
-        body: JSON.stringify({
-          ...form,
-          assignedUserId: form.assignedUserId || undefined,
-          promisedAt: form.promisedAt ? new Date(form.promisedAt).toISOString() : undefined
-        })
+        body: JSON.stringify(payload)
       });
 
       setForm(initialForm);

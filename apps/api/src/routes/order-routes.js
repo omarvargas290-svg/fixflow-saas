@@ -10,6 +10,14 @@ import { buildFolio } from "../utils/folio.js";
 import { serialize } from "../utils/serialize.js";
 
 const router = Router();
+const blankToUndefined = (value) =>
+  typeof value === "string" && value.trim() === "" ? undefined : value;
+
+const optionalStringField = () =>
+  z.preprocess(blankToUndefined, z.string().trim().optional());
+
+const optionalEmailField = () =>
+  z.preprocess(blankToUndefined, z.string().trim().email().optional());
 
 router.get(
   "/",
@@ -60,27 +68,27 @@ router.post(
       customerId: z.string().optional(),
       customer: z
         .object({
-          fullName: z.string().min(3),
-          phone: z.string().min(7),
-          email: z.string().email().optional(),
-          notes: z.string().optional()
+          fullName: z.string().trim().min(3),
+          phone: z.string().trim().min(7),
+          email: optionalEmailField(),
+          notes: optionalStringField()
         })
         .optional(),
       device: z.object({
-        category: z.string().min(2),
-        brand: z.string().min(2),
-        model: z.string().min(2),
-        serialNumber: z.string().optional(),
-        imei: z.string().optional(),
-        accessories: z.string().optional(),
-        issueSummary: z.string().min(3)
+        category: z.string().trim().min(2),
+        brand: z.string().trim().min(2),
+        model: z.string().trim().min(2),
+        serialNumber: optionalStringField(),
+        imei: optionalStringField(),
+        accessories: optionalStringField(),
+        issueSummary: optionalStringField()
       }),
-      failureReport: z.string().min(3),
-      priority: z.string().optional(),
+      failureReport: z.string().trim().min(3),
+      priority: optionalStringField(),
       promisedAt: z.string().datetime().optional(),
       estimateAmount: z.number().optional(),
       paidAmount: z.number().optional(),
-      assignedUserId: z.string().optional()
+      assignedUserId: optionalStringField()
     });
 
     const payload = schema.parse(req.body);
@@ -119,7 +127,7 @@ router.post(
         serialNumber: payload.device.serialNumber || null,
         imei: payload.device.imei || null,
         accessories: payload.device.accessories || null,
-        issueSummary: payload.device.issueSummary
+        issueSummary: payload.device.issueSummary || payload.failureReport
       }
     });
 
