@@ -13,7 +13,18 @@ router.get(
     const warranties = await prisma.warranty.findMany({
       where: { tenantId: req.auth.tenantId },
       include: {
-        serviceOrder: true,
+        serviceOrder: {
+          include: {
+            customer: true,
+            assignedUser: {
+              select: {
+                id: true,
+                name: true,
+                email: true
+              }
+            }
+          }
+        },
         device: true
       },
       orderBy: { endsAt: "desc" }
