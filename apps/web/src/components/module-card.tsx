@@ -11,8 +11,12 @@ export function ModuleCard({ title, description, bullets, icon }: Props) {
       <div className="panel-title-row">
         <div className="module-title">
           {icon ? <span className="module-icon">{icon}</span> : null}
-          <h3>{title}</h3>
+          <div className="module-title-copy">
+            <span className="panel-kicker">Modulo</span>
+            <h3>{title}</h3>
+          </div>
         </div>
+        <span className="module-outline">Activo</span>
       </div>
       <p>{description}</p>
       <ul className="compact-list">
