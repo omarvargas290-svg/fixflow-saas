@@ -44,34 +44,26 @@ export default function LoginPage() {
 
   return (
     <main className="login-shell">
-      <div className="login-grid">
-        <section className="hero-card">
+      <div className="login-grid compact-login-grid">
+        <section className="hero-card compact-hero-card">
           <div>
             <span className="eyebrow">FixFlow SaaS</span>
-            <h1>Operacion, servicio y caja en un solo panel.</h1>
-            <p>
-              Diseñado para talleres de celulares y laptops que necesitan control
-              profesional de ordenes, anticipos, inventario, POS, garantias y
-              permisos por rol.
-            </p>
+            <h1>Operacion y control del taller.</h1>
+            <p>Ordenes, inventario, POS y seguimiento en una sola plataforma.</p>
           </div>
 
-          <div className="hero-grid">
+          <div className="hero-grid compact-hero-grid">
             <div className="hero-chip">
-              <strong>Ordenes y folios</strong>
-              <span>Busqueda por nombre, IMEI, telefono o folio.</span>
+              <strong>Ordenes</strong>
+              <span>Cliente, equipo y folio.</span>
             </div>
             <div className="hero-chip">
-              <strong>Inventario y piezas</strong>
-              <span>Control de stock, costo, margen y piezas utilizadas.</span>
+              <strong>Inventario</strong>
+              <span>Stock y piezas usadas.</span>
             </div>
             <div className="hero-chip">
-              <strong>POS y caja</strong>
-              <span>Cobros, ventas de mostrador y cortes operativos.</span>
-            </div>
-            <div className="hero-chip">
-              <strong>SaaS escalable</strong>
-              <span>Tenant, branding y base lista para multisucursal.</span>
+              <strong>POS</strong>
+              <span>Ventas y corte diario.</span>
             </div>
           </div>
         </section>
@@ -79,7 +71,7 @@ export default function LoginPage() {
         <section className="login-card">
           <span className="eyebrow">Acceso seguro</span>
           <h2>Inicia sesion</h2>
-          <p>Ingresa tus datos para acceder al panel de control.</p>
+          <p>Accede al panel de control.</p>
 
           <form className="form-stack" onSubmit={handleSubmit}>
             <div className="field">

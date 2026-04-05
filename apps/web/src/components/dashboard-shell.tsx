@@ -50,12 +50,7 @@ const navSections: NavSection[] = [
   {
     title: "Vision general",
     items: [
-      {
-        href: "/dashboard",
-        label: "Resumen",
-        icon: "RS",
-        note: "KPI, flujo y accesos"
-      }
+      { href: "/dashboard", label: "Resumen", icon: "RS", note: "KPI y flujo" }
     ]
   },
   {
@@ -65,31 +60,31 @@ const navSections: NavSection[] = [
         href: "/dashboard/clientes",
         label: "Clientes",
         icon: "CL",
-        note: "Recepcion y contacto"
+        note: "Recepcion"
       },
       {
         href: "/dashboard/equipos",
         label: "Equipos",
         icon: "EQ",
-        note: "Recepcion y control tecnico"
+        note: "Control tecnico"
       },
       {
         href: "/dashboard/ordenes",
         label: "Ordenes",
         icon: "OS",
-        note: "Servicio, cobro y seguimiento"
+        note: "Servicio y cobro"
       },
       {
         href: "/dashboard/inventario",
         label: "Inventario",
         icon: "IN",
-        note: "Refacciones, stock y costo"
+        note: "Stock y costo"
       },
       {
         href: "/dashboard/garantias",
         label: "Garantias",
         icon: "GT",
-        note: "Vigencias y respaldo"
+        note: "Vigencias"
       }
     ]
   },
@@ -100,19 +95,19 @@ const navSections: NavSection[] = [
         href: "/dashboard/pos",
         label: "POS",
         icon: "PV",
-        note: "Mostrador y tickets"
+        note: "Mostrador"
       },
       {
         href: "/dashboard/compras",
         label: "Compras",
         icon: "CP",
-        note: "Proveedores y reabasto"
+        note: "Reabasto"
       },
       {
         href: "/dashboard/reportes",
         label: "Reportes",
         icon: "RP",
-        note: "Lectura financiera"
+        note: "Analisis"
       }
     ]
   },
@@ -123,13 +118,13 @@ const navSections: NavSection[] = [
         href: "/dashboard/suscripcion",
         label: "Suscripcion",
         icon: "SB",
-        note: "Plan, facturas y renovacion"
+        note: "Plan y pagos"
       },
       {
         href: "/dashboard/admin",
         label: "Admin",
         icon: "AD",
-        note: "Usuarios, branding y sucursales"
+        note: "Usuarios y marca"
       }
     ]
   }
@@ -202,8 +197,6 @@ export function DashboardShell({
   const primaryColor = tenantProfile?.brandProfile?.primaryColor || "#145cff";
   const accentColor = tenantProfile?.brandProfile?.accentColor || "#22c55e";
   const branchCount = tenantProfile?.branches?.length || 1;
-  const supportEmail = tenantProfile?.brandProfile?.supportEmail || session.user.email;
-
   return (
     <div
       className="dashboard-shell"
@@ -326,26 +319,21 @@ export function DashboardShell({
 
         <section className="workspace-strip">
           <div className="workspace-stat">
-            <span>Tenant activo</span>
+            <span>Taller</span>
             <strong>{brandName}</strong>
             <small>{session.user.branch}</small>
           </div>
           <div className="workspace-stat">
-            <span>Operacion actual</span>
+            <span>Vista</span>
             <strong>{moduleTheme.label}</strong>
-            <small>{branchCount} sucursal(es) registradas</small>
+            <small>{branchCount} sucursal(es)</small>
           </div>
           <div className="workspace-stat">
-            <span>Plan y estado</span>
+            <span>Cuenta</span>
             <strong>
               {tenantProfile?.plan || "MVP"} / {tenantProfile?.subscriptionStatus || "TRIAL"}
             </strong>
-            <small>Listo para atencion diaria</small>
-          </div>
-          <div className="workspace-stat">
-            <span>Contacto de soporte</span>
-            <strong>{supportEmail}</strong>
-            <small>Visible para operacion y administracion</small>
+            <small>{roleText}</small>
           </div>
         </section>
 

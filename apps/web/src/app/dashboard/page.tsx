@@ -28,17 +28,17 @@ const quickLinks = [
   {
     href: "/dashboard/ordenes",
     title: "Capturar orden",
-    description: "Registra un equipo, asigna tecnico y deja ticket listo."
+    description: "Registra el equipo y deja ticket."
   },
   {
     href: "/dashboard/inventario",
     title: "Revisar inventario",
-    description: "Detecta piezas con bajo stock y repuestos nuevos."
+    description: "Detecta stock bajo."
   },
   {
     href: "/dashboard/reportes",
     title: "Ver reportes",
-    description: "Consulta flujo diario, semanal y mensual."
+    description: "Consulta cierre y flujo."
   }
 ];
 
@@ -54,7 +54,7 @@ export default function DashboardPage() {
   return (
     <DashboardShell
       title="Dashboard operativo"
-      description="MVP listo para gestionar clientes, equipos, ordenes, ventas, inventario y accesos por rol."
+      description="Vista central para ordenes, ventas, inventario y control diario."
       moduleTheme={{
         code: "RS",
         label: "Resumen",
@@ -66,10 +66,8 @@ export default function DashboardPage() {
       <section className="overview-hero">
         <div className="overview-copy">
           <span className="eyebrow">Vista general</span>
-          <h3>Un punto de control para taller, mostrador y administracion.</h3>
-          <p>
-            Monitorea ordenes activas, ingresos y stock critico sin cambiar de pantalla.
-          </p>
+          <h3>Control rapido del taller en una sola vista.</h3>
+          <p>Ordenes activas, ingresos y stock critico sin navegar de mas.</p>
         </div>
 
         <div className="quick-links-grid">
@@ -126,7 +124,7 @@ export default function DashboardPage() {
           <div className="panel-title-row">
             <div>
               <h3>Pipeline de reparacion</h3>
-              <p>Distribucion por estado del taller.</p>
+              <p>Estado actual del taller.</p>
             </div>
             <span className="header-chip">Operacion activa</span>
           </div>
@@ -152,21 +150,21 @@ export default function DashboardPage() {
         <section className="card-grid">
           <ModuleCard
             title="Operacion de taller"
-            description="Captura de equipos, estados, tickets termicos e historial."
+            description="Recepcion, seguimiento y entrega."
             icon="TL"
             bullets={[
-              "Clientes y equipos recibidos",
-              "Ordenes de servicio con folio automatico",
-              "Anticipos, saldos y garantias"
+              "Clientes y equipos",
+              "Ordenes con folio automatico",
+              "Anticipos y garantias"
             ]}
           />
           <ModuleCard
             title="Comercial y caja"
-            description="Mostrador, cortes, proveedores y seguimiento financiero."
+            description="Mostrador, caja y compras."
             icon="CJ"
             bullets={[
-              "POS para refacciones y accesorios",
-              "Caja diaria con aperturas y cierres",
+              "POS para refacciones",
+              "Caja diaria",
               "Compras y proveedores"
             ]}
           />
