@@ -87,6 +87,7 @@ textarea:focus {
 .compact-login-grid {
   grid-template-columns: minmax(0, 0.92fr) minmax(380px, 0.82fr);
   align-items: start;
+  width: min(1180px, 100%);
 }
 
 .tracking-grid {
@@ -124,6 +125,7 @@ textarea:focus {
   padding: 26px 28px;
   gap: 18px;
   align-self: start;
+  justify-content: flex-start;
 }
 
 .compact-hero-card h1 {
@@ -1435,10 +1437,14 @@ tbody tr:hover {
   .split-grid,
   .split-grid.balanced,
   .overview-hero,
-  .login-grid,
   .tracking-grid,
   .workspace-strip {
     grid-template-columns: 1fr;
+  }
+
+  .compact-login-grid {
+    grid-template-columns: minmax(320px, 0.84fr) minmax(360px, 0.96fr);
+    align-items: start;
   }
 
   .compact-hero-grid {
@@ -1451,6 +1457,13 @@ tbody tr:hover {
 
   .form-grid.three,
   .line-item-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1120px) {
+  .login-grid,
+  .compact-login-grid {
     grid-template-columns: 1fr;
   }
 }
